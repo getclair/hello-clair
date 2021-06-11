@@ -11,7 +11,7 @@ class InstallAppsCommand extends StepCommand
      *
      * @var string
      */
-    protected $signature = 'apps';
+    protected $signature = 'install:apps';
 
     /**
      * The description of the command.

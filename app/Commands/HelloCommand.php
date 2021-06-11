@@ -24,10 +24,10 @@ class HelloCommand extends Command
      * @var string[]
      */
     protected $steps = [
-        'cli-tools',
+        'install:cli-tools',
         'configure',
-        'apps',
-        'repos',
+        'install:apps',
+        'install:repos',
     ];
 
     /**

@@ -56,18 +56,20 @@ return [
 
     'hidden' => [
         NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
+        NunoMaduro\Collision\Adapters\Laravel\Commands\TestCommand::class,
         Symfony\Component\Console\Command\HelpCommand::class,
         Illuminate\Console\Scheduling\ScheduleRunCommand::class,
         Illuminate\Console\Scheduling\ScheduleFinishCommand::class,
         Illuminate\Foundation\Console\VendorPublishCommand::class,
-        \Pest\Laravel\Commands\PestDatasetCommand::class,
-        \Pest\Laravel\Commands\PestInstallCommand::class,
-        \Pest\Laravel\Commands\PestTestCommand::class,
-        \LaravelZero\Framework\Commands\BuildCommand::class,
-        \LaravelZero\Framework\Commands\InstallCommand::class,
-        \LaravelZero\Framework\Commands\MakeCommand::class,
-        \LaravelZero\Framework\Commands\RenameCommand::class,
-        \LaravelZero\Framework\Commands\StubPublishCommand::class,
+        Pest\Laravel\Commands\PestDatasetCommand::class,
+        Pest\Laravel\Commands\PestInstallCommand::class,
+        Pest\Laravel\Commands\PestTestCommand::class,
+        LaravelZero\Framework\Commands\BuildCommand::class,
+        LaravelZero\Framework\Commands\InstallCommand::class,
+        LaravelZero\Framework\Commands\MakeCommand::class,
+        LaravelZero\Framework\Commands\RenameCommand::class,
+        LaravelZero\Framework\Commands\StubPublishCommand::class,
+
     ],
 
     /*

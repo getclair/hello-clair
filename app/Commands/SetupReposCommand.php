@@ -15,7 +15,8 @@ class SetupReposCommand extends StepCommand
      *
      * @var string
      */
-    protected $signature = 'repos {--f|force : Force a fresh install}';
+    protected $signature = 'install:repos
+                            {--f|force : Force a fresh install}';
 
     /**
      * The description of the command.

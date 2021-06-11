@@ -11,7 +11,7 @@ class InstallCliToolsCommand extends StepCommand
      *
      * @var string
      */
-    protected $signature = 'cli-tools';
+    protected $signature = 'install:cli-tools';
 
     /**
      * The description of the command.

@@ -19,6 +19,7 @@
         "php": "^7.3|^8.0",
         "czproject/git-php": "^4.0",
         "hotmeteor/eco-env": "^1.1",
+        "laminas/laminas-text": "^2.8",
         "laravel-zero/framework": "^8.8",
         "nunomaduro/laravel-console-menu": "^3.2",
         "nunomaduro/laravel-console-task": "^1.6",
