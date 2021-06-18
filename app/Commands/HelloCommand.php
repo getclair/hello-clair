@@ -43,7 +43,7 @@ class HelloCommand extends Command
         $spaces = str_repeat(' ', $size);
 
         $this->output->newLine();
-        $this->output->writeln("<bg=#032A51;fg=white>$spaces$title$spaces</>");
+        $this->output->writeln("<fg=white>$spaces$title$spaces</>");
         $this->output->newLine();
 
         $this->info('Hello! Welcome aboard, friend.');

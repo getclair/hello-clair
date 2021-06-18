@@ -46,6 +46,20 @@ class SetupReposCommand extends StepCommand
         $selections = $this->getSelections(config('manifest.repos'));
 
         if (count($selections) > 0) {
+            foreach ($selections as $folder => $selection) {
+                $this->task("Installing {$selection['name']}", function () use ($folder, $selection) {
+                    if ($this->shouldSetupRepo($folder)) {
+                        $method = Str::camel("setup_{$selection['type']}");
+
+                        if (method_exists($this, $method)) {
+                            $this->$method($folder, $selection);
+                        }
+                    }
+
+                    return true;
+                }, 'installing...');
+            }
+
             $this->info(count($selections).' '.Str::plural('project', count($selections)).' successfully installed!');
 
             $this->table(
