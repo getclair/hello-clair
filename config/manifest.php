@@ -255,7 +255,7 @@ return [
         ],
 
         'mobile' => [
-            'name' => 'Clair React Native mobile apps',
+            'name' => 'Clair React Native mobile app',
             'type' => 'react-native',
             'ssh' => 'git@github.com:getclair/mobile.git',
         ],
@@ -266,10 +266,10 @@ return [
             'ssh' => 'git@github.com:getclair/embedded-web.git',
         ],
 
-        'docs' => [
-            'name' => 'Partner Portal',
+        'getclair' => [
+            'name' => 'Getclair.com',
             'type' => 'laravel',
-            'ssh' => 'git@github.com:getclair/clair-docs.git',
+            'ssh' => 'git@github.com:getclair/getclair.com.git',
         ],
 
     ],

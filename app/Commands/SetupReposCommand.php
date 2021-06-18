@@ -41,22 +41,24 @@ class SetupReposCommand extends StepCommand
     {
         $this->repoFolder = $this->ask('What is your repo folder?', $this->homeDirectory('Web'));
 
+        File::ensureDirectoryExists($this->repoFolder);
+
         $selections = $this->getSelections(config('manifest.repos'));
 
         if (count($selections) > 0) {
-            foreach ($selections as $key => $selection) {
-                $this->task("Installing {$selection['name']}", function () use ($key, $selection) {
-                    if ($this->shouldSetupRepo($key)) {
-                        $method = Str::camel("setup_{$selection['type']}");
+            $this->info(count($selections).' '.Str::plural('project', count($selections)).' successfully installed!');
 
-                        if (method_exists($this, $method)) {
-                            $this->$method($key, $selection);
-                        }
-                    }
-
-                    return true;
-                }, 'installing...');
-            }
+            $this->table(
+                ['Project', 'Path', 'URL', 'Type'],
+                collect($selections)->map(function ($item, $key) {
+                    return [
+                        $item['name'],
+                        $this->repoFolder($key),
+                        in_array($item['type'], ['laravel']) ? "http://{$key}.test" : '--',
+                        Str::title(str_replace('-', ' ', $item['type'])),
+                    ];
+                })->toArray(),
+            );
         }
     }
 
