@@ -247,14 +247,52 @@ class SetupReposCommand extends StepCommand
      */
     protected function configureLaravelApp($path, $name, array $config)
     {
+        // Configure .env keys
         $this->terminal($path)->output($this)->run('php -r "file_exists(\'.env\') || copy(\'.env.example\', \'.env\');"');
         $this->terminal($path)->output($this)->run('php artisan key:generate --ansi');
 
-        $this->terminal($path)->output($this)->run("valet link {$name}");
+        // Set .env variables
+        foreach ($this->envVariables($config, $name) as $key => $value) {
+            Env::set($path.'/.env', $key, $value);
+        }
 
-        Env::set($path.'/.env', 'APP_NAME', $config['name']);
-        Env::set($path.'/.env', 'APP_URL', "http://{$name}.test");
+        // Setup database
+        if ($this->shouldSetupDatabase()) {
+            $this->terminal($path)->output($this)->run("createdb $name");
+            $this->terminal($path)->output($this)->run('php artisan migrate');
+        }
 
+        // Clear app
         $this->terminal($path)->output($this)->run('composer dump');
+
+        // Create local URL
+        $this->terminal($path)->output($this)->run("valet link {$name}");
+    }
+
+    /**
+     * @return bool
+     */
+    protected function shouldSetupDatabase(): bool
+    {
+        return $this->terminal()->run('which createdb')->ok();
+    }
+
+    /**
+     * @param  array  $config
+     * @param $name
+     * @return array
+     */
+    protected function envVariables(array $config, $name): array
+    {
+        return [
+            'APP_NAME' => $config['name'],
+            'APP_URL' => "http://{$name}.test",
+            'DB_CONNECTION' => 'pgsql',
+            'DB_HOST' => '127.0.0.1',
+            'DB_PORT' => '5432',
+            'DB_DATABASE' => $name,
+            'DB_USERNAME' => 'postgres',
+            'DB_PASSWORD' => '',
+        ];
     }
 }
