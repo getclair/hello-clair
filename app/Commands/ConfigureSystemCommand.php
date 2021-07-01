@@ -47,12 +47,13 @@ class ConfigureSystemCommand extends StepCommand
 
         if ($this->confirm('Do you want to set up Github authentication now?', true)) {
             if ($token = $this->secret('Create a token on Github (https://github.com/settings/tokens/new) and enter it')) {
+
                 // Set git to user the OSX keychain.
                 $this->terminal()->output($this)->run('git config --global credential.helper osxkeychain');
 
                 // Store the credentials.
                 File::put(
-                    $this->homeDirectory('.testgit'),
+                    $this->homeDirectory('.git'),
                     "https://{$git_username}:{$token}@github.com/{$git_username}"
                 );
             }
