@@ -12,6 +12,11 @@ Command | Description
 `clair install:repos` | Install and setup Clair projects
 `clair configure` | Set up Git credentials
 
+## Configuration
+
+- A global `.gitignore` file is defined and set up for git
+- Ability to setup Git author and authorization settings
+
 ## Options
 
 ### CLI Tools
