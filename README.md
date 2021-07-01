@@ -27,6 +27,13 @@ Cask | |
 Docker | | 
 AWS CLI | | 
 
+### Unix Shell (one of)
+
+When a Unix shell is selected to be installed, `zsh` is installed first.
+
+- Oh My Zsh (https://github.com/robbyrussell/oh-my-zsh)
+- Prezto (https://github.com/sorin-ionescu/prezto)
+
 ### Applications
 
 #### Database Management (one of)
