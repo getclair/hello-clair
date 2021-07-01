@@ -12,6 +12,11 @@ Command | Description
 `clair install:repos` | Install and setup Clair projects
 `clair configure` | Set up Git credentials
 
+## Configuration
+
+- A global `.gitignore` file is defined and set up for git
+- Ability to setup Git author and authorization settings
+
 ## Options
 
 ### CLI Tools
@@ -26,6 +31,13 @@ npm | Valet |
 Cask | | 
 Docker | | 
 AWS CLI | | 
+
+### Unix Shell (one of)
+
+When a Unix shell is selected to be installed, `zsh` is installed first.
+
+- Oh My Zsh (https://github.com/robbyrussell/oh-my-zsh)
+- Prezto (https://github.com/sorin-ionescu/prezto)
 
 ### Applications
 
