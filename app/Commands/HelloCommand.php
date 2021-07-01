@@ -27,6 +27,7 @@ class HelloCommand extends Command
     protected $steps = [
         'install:cli-tools',
         'configure',
+        'install:shell',
         'install:apps',
         'install:repos',
     ];

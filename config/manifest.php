@@ -106,6 +106,41 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Unix Shells
+    |--------------------------------------------------------------------------
+    |
+    | These are a list of Unix shells that can be installed.
+    |
+    */
+
+    'shell' => [
+
+        'options' => [
+            'ohmyzsh' => [
+                'name' => 'Oh My Zsh',
+                'description' => 'Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. It comes with a bunch of features out of the box and improves your terminal experience.',
+                'url' => 'https://github.com/robbyrussell/oh-my-zsh',
+                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"',
+            ],
+
+            'prezto' => [
+                'name' => 'Prezto',
+                'description' => 'Prezto is a configuration framework for zsh; it enriches the command line interface environment with sane defaults, aliases, functions, auto completion, and prompt themes.',
+                'url' => 'https://github.com/sorin-ionescu/prezto',
+                'command' => '
+                    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto" && \
+                    setopt EXTENDED_GLOB \
+                        for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do \
+                            ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}" \
+                        done
+                ',
+            ],
+        ],
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Applications
     |--------------------------------------------------------------------------
     |

@@ -27,6 +27,7 @@ class ConfigureSystemCommand extends StepCommand
      */
     public function handle()
     {
+        $this->setupGlobalIgnore();
         $this->configureGithub();
     }
 
@@ -56,5 +57,18 @@ class ConfigureSystemCommand extends StepCommand
                 );
             }
         }
+    }
+
+    /**
+     * Setup global .gitignore file to always ignore junk files.
+     */
+    protected function setupGlobalIgnore()
+    {
+        $url = 'https://raw.githubusercontent.com/freekmurze/dotfiles/master/shell/.global-gitignore';
+        $path = '~/.gitignore';
+
+        File::put($path, file_get_contents($url));
+
+        $this->terminal()->output($this)->run("git config --global core.excludesfile $path");
     }
 }
