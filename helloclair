@@ -1,0 +1,15 @@
+#!/bin/bash
+
+HAYSTACK=$(which php);
+NEEDLE='not found'
+
+echo "Hello, $(whoami)!"
+
+if [[ "$HAYSTACK" == *"$NEEDLE"* ]]; then
+  # PHP not installed...
+
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash command brew install php
+fi
+
+/bin/bash command /usr/local/bin/clair hello
