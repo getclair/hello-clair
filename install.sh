@@ -1,12 +1,12 @@
 #!/bin/bash
 
-ZIPFILE='hello-clair-main.zip'
-ZIPPATH='https://clair-assets.s3.amazonaws.com/hello-clair-main.zip'
-UNZIPPATH='hello-clair-main'
+TEMP=./helloclair
 DEST=/usr/local/bin
+ZIPFILE='helloclair.zip'
+ZIPPATH='https://clair-assets.s3.amazonaws.com/helloclair.zip'
 
 declare -a SCRIPTS
-SCRIPTS=('clair' 'helloclair')
+SCRIPTS=('builds/clair::clair' 'helloclair::helloclair')
 
 abort() {
   printf "%s\n" "$@"
@@ -29,18 +29,23 @@ execute() {
   fi
 }
 
+# Create the tmp local folder
+rm - "$TEMP"
+mkdir -p "$TEMP"
+
 # Download and unzip the zip file
 execute "curl" "$ZIPPATH" "-o" "./$ZIPFILE"
-unzip -o "./$ZIPFILE"
+unzip -o "./$ZIPFILE" -d "$TEMP"
 
 # Move the files and update permissions
-for script in "${SCRIPTS[@]}";
+for index in "${SCRIPTS[@]}";
 do
-  mv "./$UNZIPPATH/$script" "$DEST/"
-  execute "chmod" "a+x" "$DEST/${script}"
+  SRC="${index%%::*}"
+  SCRIPT="${index##*::}"
+  mv "$TEMP/$SRC" "$DEST/${SCRIPT}"
+  execute "chmod" "a+x" "$DEST/${SCRIPT}"
 done
 
 # Cleanup
-rm "./$ZIPFILE"
-rm -r "./$UNZIPPATH"
-
+rm "$ZIPFILE"
+rm -r "$TEMP"
