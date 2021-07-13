@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 TEMP=./helloclair
 DEST=/usr/local/bin
