@@ -30,22 +30,22 @@ execute() {
 }
 
 # Create the tmp local folder
-rm - "$TEMP"
-mkdir -p "$TEMP"
+execute "sudo" "rm" "-r" "$TEMP"
+execute "sudo" "mkdir" "-p" "$TEMP"
 
 # Download and unzip the zip file
-execute "curl" "$ZIPPATH" "-o" "./$ZIPFILE"
-unzip -o "./$ZIPFILE" -d "$TEMP"
+execute "sudo" "curl" "$ZIPPATH" "-o" "./$ZIPFILE"
+execute "sudo" "unzip" "-o" "./$ZIPFILE" "-d" "$TEMP"
 
 # Move the files and update permissions
 for index in "${SCRIPTS[@]}";
 do
   SRC="${index%%::*}"
   SCRIPT="${index##*::}"
-  mv "$TEMP/$SRC" "$DEST/${SCRIPT}"
-  execute "chmod" "a+x" "$DEST/${SCRIPT}"
+  execute "sudo" "mv" "$TEMP/$SRC" "$DEST/${SCRIPT}"
+  execute "sudo" "chmod" "a+x" "$DEST/${SCRIPT}"
 done
 
 # Cleanup
-rm "$ZIPFILE"
-rm -r "$TEMP"
+execute "sudo" "rm" "$ZIPFILE"
+execute "sudo" "rm" "-r" "$TEMP"
