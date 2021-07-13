@@ -13,3 +13,4 @@ if [[ "$HAYSTACK" == *"$NEEDLE"* ]]; then
 fi
 
 /bin/bash command /usr/local/bin/clair hello
+
