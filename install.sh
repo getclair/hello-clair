@@ -30,8 +30,7 @@ execute() {
 }
 
 # Create the tmp local folder
-execute "sudo" "rm" "-r" "$TEMP"
-execute "sudo" "mkdir" "-p" "$TEMP"
+sudo [ ! -d "$TEMP" ] && sudo $_mkdir -p "$TEMP"
 
 # Download and unzip the zip file
 execute "sudo" "curl" "$ZIPPATH" "-o" "./$ZIPFILE"
