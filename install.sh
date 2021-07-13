@@ -1,10 +1,12 @@
 #!/bin/bash
 
-DEST=./test
+ZIPFILE='hello-clair-main.zip'
+ZIPPATH='https://clair-assets.s3.amazonaws.com/hello-clair-main.zip'
+UNZIPPATH='hello-clair-main'
+DEST=/usr/local/bin
 
-declare -a scripts
-scripts['clair']='https://github.com/getclair/hello-clair/blob/main/builds/clair?raw=true'
-scripts['helloclair']=https://raw.githubusercontent.com/getclair/hello-clair/main/helloclair
+declare -a SCRIPTS
+SCRIPTS=('clair' 'helloclair')
 
 abort() {
   printf "%s\n" "$@"
@@ -27,12 +29,18 @@ execute() {
   fi
 }
 
+# Download and unzip the zip file
+execute "curl" "$ZIPPATH" "-o" "./$ZIPFILE"
+unzip -o "./$ZIPFILE"
 
-for i in "${!scripts[@]}"
+# Move the files and update permissions
+for script in "${SCRIPTS[@]}";
 do
-  echo $i
-  echo ${scripts[$i]}
-#  execute "curl" "${array[$i]}" "-o" "$DEST/$i"
-#  execute "chmod" "a+x" "$DEST/$i"
+  mv "./$UNZIPPATH/$script" "$DEST/"
+  execute "chmod" "a+x" "$DEST/${script}"
 done
+
+# Cleanup
+rm "./$ZIPFILE"
+rm -r "./$UNZIPPATH"
 
