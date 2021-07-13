@@ -17,7 +17,6 @@ jobs:
       uses: jakejarvis/s3-sync-action@v0.5.1
       env:
         SOURCE_DIR: './artifacts'
-        DEST_DIR: '/'
         AWS_REGION: 'us-east-1'
         AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
