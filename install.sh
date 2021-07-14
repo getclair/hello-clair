@@ -25,3 +25,6 @@ done
 
 # Cleanup
 rm -r "$TEMP"
+
+# Exit
+echo $?
