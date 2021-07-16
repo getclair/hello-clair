@@ -1,18 +1,16 @@
 {
-    "name": "laravel-zero/laravel-zero",
+    "name": "getclair/hello-clair",
     "description": "The Laravel Zero Framework.",
     "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
-    "homepage": "https://laravel-zero.com",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
+        "source": "https://github.com/getclair/hello-clair"
     },
     "authors": [
         {
-            "name": "Nuno Maduro",
-            "email": "enunomaduro@gmail.com"
+            "name": "Adam Campbell",
+            "email": "adam@getclair.com"
         }
     ],
     "require": {
