@@ -65,10 +65,12 @@ class ConfigureSystemCommand extends StepCommand
      */
     protected function setupGlobalIgnore()
     {
-        $url = 'https://raw.githubusercontent.com/freekmurze/dotfiles/master/shell/.global-gitignore';
-        $path = '~/.gitignore';
+        $path = $_SERVER['HOME'].'/.gitignore';
 
-        File::put($path, file_get_contents($url));
+        if (! is_file($path)) {
+            $url = 'https://raw.githubusercontent.com/freekmurze/dotfiles/master/shell/.global-gitignore';
+            file_put_contents($path, file_get_contents($url));
+        }
 
         $this->terminal()->output($this)->run("git config --global core.excludesfile $path");
     }
