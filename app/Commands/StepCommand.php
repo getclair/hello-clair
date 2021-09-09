@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use Illuminate\Support\Str;
 use LaravelZero\Framework\Commands\Command;
 use TitasGailius\Terminal\Terminal;
 
@@ -22,6 +23,10 @@ abstract class StepCommand extends Command
      */
     protected function homeDirectory($path = null): string
     {
+        if (Str::startsWith($path, '/')) {
+            $path = Str::replaceFirst('/', '', $path);
+        }
+
         return implode('/', [getenv('HOME'), $path]);
     }
 }

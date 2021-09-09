@@ -1,0 +1,16 @@
+{
+  "Profiles": [
+    {
+      "Name": "Hello Clair",
+      "Guid": "A6AA340E-97DC-4949-9C6B-56D2245A50FC",
+      "Dynamic Profile Parent Name": "Default",
+      "Use Non-ASCII Font": false,
+      "Normal Font": "Inconsolata for Powerline 14",
+      "ASCII Anti Aliased": true,
+      "Non Ascii Font": "Monaco 12",
+      "Vertical Spacing": 1.26,
+      "Use Bold Font": true,
+      "Horizontal Spacing": 1
+    }
+  ]
+}
