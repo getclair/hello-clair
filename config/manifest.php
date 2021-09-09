@@ -133,6 +133,7 @@ return [
                 'name' => 'Oh My Zsh',
                 'description' => 'Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. It comes with a bunch of features out of the box and improves your terminal experience.',
                 'url' => 'https://github.com/robbyrussell/oh-my-zsh',
+                'check' => 'which zsh',
                 'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && php artisan configure:oh-my-zsh',
             ],
 
@@ -140,6 +141,7 @@ return [
                 'name' => 'Prezto',
                 'description' => 'Prezto is a configuration framework for zsh; it enriches the command line interface environment with sane defaults, aliases, functions, auto completion, and prompt themes.',
                 'url' => 'https://github.com/sorin-ionescu/prezto',
+                'check' => 'which prezto',
                 'command' => '
                     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto" && \
                     setopt EXTENDED_GLOB \
