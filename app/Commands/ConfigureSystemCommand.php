@@ -130,7 +130,7 @@ class ConfigureSystemCommand extends StepCommand
      */
     protected function setupGlobalIgnore()
     {
-        $path = $_SERVER['HOME'].'/.gitignore';
+        $path = home_path('/.gitignore');
 
         if (! is_file($path)) {
             $url = 'https://raw.githubusercontent.com/freekmurze/dotfiles/master/shell/.global-gitignore';
