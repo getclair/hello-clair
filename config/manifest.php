@@ -134,7 +134,7 @@ return [
                 'description' => 'Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. It comes with a bunch of features out of the box and improves your terminal experience.',
                 'url' => 'https://github.com/robbyrussell/oh-my-zsh',
                 'check' => 'which zsh',
-                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && php clair configure:oh-my-zsh',
+                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && clair configure:oh-my-zsh',
             ],
 
             'prezto' => [
