@@ -45,13 +45,9 @@ class InstallCliToolsCommand extends StepCommand
         ));
 
         foreach ($selections as $selection) {
-            $this->task("Installing {$selection['name']}", function () use ($selection) {
-                if ($this->shouldInstallCliTool($selection)) {
-                    $this->terminal()->output($this)->run($selection['command']);
-                }
-
-                return true;
-            }, 'installing...');
+            if ($this->shouldInstall($selection['check'])) {
+                $this->install($selection);
+            }
         }
     }
 
@@ -63,7 +59,14 @@ class InstallCliToolsCommand extends StepCommand
      */
     protected function getSelections(array $groups): array
     {
-        $choices = $this->buildQuestion();
+        $choices = $this->buildQuestion(
+            'Select the environments you want to install',
+            [
+                'backend' => 'Backend',
+                'frontend' => 'Frontend',
+            ],
+            true
+        );
 
         if (! is_array($choices)) {
             $choices = [$choices];
@@ -85,36 +88,18 @@ class InstallCliToolsCommand extends StepCommand
     }
 
     /**
-     * Build and display apps question.
-     *
-     * @return array|string
-     */
-    protected function buildQuestion()
-    {
-        return $this->choice(
-            'Select the environments you want to install',
-            [
-                'none' => 'None',
-                'backend' => 'Backend',
-                'frontend' => 'Frontend',
-            ],
-            'none', null, true
-        );
-    }
-
-    /**
      * Check if a CLI tool should be installed, or if it exists already.
      *
-     * @param  array  $selection
+     * @param $checks
      * @return bool
      */
-    protected function shouldInstallCliTool(array $selection): bool
+    protected function shouldInstall($checks): bool
     {
-        if (! array_key_exists('check', $selection)) {
+        if (! array_key_exists('check', $checks)) {
             return true;
         }
 
-        $response = $this->terminal()->run($selection['check']);
+        $response = $this->terminal()->run($checks['check']);
 
         return ! $response->ok()
             || $response->getExitCode() === 1
