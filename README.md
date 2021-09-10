@@ -28,8 +28,8 @@ Global | Backend | Frontend
 XCode | PHP | yarn
 Homebrew | Composer | expo
 npm | Valet | 
-Cask | | 
-Docker | | 
+Cask | Redis | 
+Docker | Python | 
 AWS CLI | | 
 
 ### Unix Shell (one of)
@@ -37,6 +37,9 @@ AWS CLI | |
 When a Unix shell is selected to be installed, `zsh` is installed first.
 
 - Oh My Zsh (https://github.com/robbyrussell/oh-my-zsh)
+    - Adds a "Hello Clair" profile to iTerm2 with custom fonts
+    - Zsh and iTerm2 themes
+    - .zshrc config
 - Prezto (https://github.com/sorin-ionescu/prezto)
 
 ### Applications
