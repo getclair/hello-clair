@@ -18,21 +18,19 @@ return [
 
             'xcode' => [
                 'name' => 'XCode',
-                'description' => 'Installs XCode and git',
+                'description' => 'Installing XCode and git...',
                 'check' => 'xcode-select -p',
                 'command' => 'xcode-select --install',
             ],
 
             'brew' => [
                 'name' => 'Homebrew',
-                'description' => '',
                 'check' => 'which brew',
                 'command' => '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"',
             ],
 
             'npm' => [
                 'name' => 'npm',
-                'description' => '',
                 'check' => 'which npm',
                 'command' => 'brew install npm',
             ],
@@ -46,14 +44,12 @@ return [
 
             'docker' => [
                 'name' => 'Docker',
-                'description' => '',
                 'check' => 'which docker',
                 'command' => 'brew install docker',
             ],
 
             'awscli' => [
                 'name' => 'AWS CLI',
-                'description' => '',
                 'check' => 'which aws',
                 'command' => 'brew install awscli',
             ],
@@ -64,36 +60,33 @@ return [
 
             'php' => [
                 'name' => 'PHP',
-                'description' => '',
                 'check' => 'which php',
                 'command' => 'brew install php',
             ],
 
             'python' => [
                 'name' => 'Python',
-                'description' => 'Installing Python...',
                 'check' => 'which python3',
                 'command' => 'brew install python3',
             ],
 
             'composer' => [
                 'name' => 'Composer',
-                'description' => '',
                 'check' => 'which composer',
                 'command' => 'brew install composer',
             ],
 
             'valet' => [
                 'name' => 'Valet',
-                'description' => '',
                 'check' => 'which valet',
                 'command' => 'composer global require laravel/valet && valet domain test',
-            ],
-
-            'redis' => [
-                'name' => 'Redis',
-                'description' => '',
-                'command' => 'yes | pecl install -f redis',
+                'tasks' => [
+                    'redis' => [
+                        'name' => 'Redis',
+                        'description' => 'Installing Redis...',
+                        'command' => 'yes | pecl install -f redis',
+                    ],
+                ],
             ],
 
         ],
@@ -102,14 +95,12 @@ return [
 
             'yarn' => [
                 'name' => 'yarn',
-                'description' => '',
                 'check' => 'which yarn',
                 'command' => 'brew install yarn',
             ],
 
             'expo' => [
                 'name' => 'expo',
-                'description' => '',
                 'check' => 'which expo-cli',
                 'command' => 'npm install -g expo-cli',
             ],
@@ -131,15 +122,48 @@ return [
         'options' => [
             'ohmyzsh' => [
                 'name' => 'Oh My Zsh',
-                'description' => 'Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. It comes with a bunch of features out of the box and improves your terminal experience.',
+                'description' => 'Installing Oh My Zsh and configurations...',
                 'url' => 'https://github.com/robbyrussell/oh-my-zsh',
                 'check' => 'which zsh',
-                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && clair configure:oh-my-zsh',
+                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"',
+                'tasks' => [
+                    [
+                        'description' => 'Adding Zsh theme...',
+                        'source' => resource_path('config/cobalt2-custom.zsh-theme'),
+                        'destination' => home_path('.oh-my-zsh/themes/cobalt2-clair.zsh-theme'),
+                    ],
+                    [
+                        'description' => 'Adding iTerm2 theme...',
+                        'source' => resource_path('config/iTerm2-custom.zsh'),
+                        'destination' => home_path('.oh-my-zsh/custom/iTerm2-clair.zsh'),
+                    ],
+                    [
+                        'description' => 'Adding .zshrc...',
+                        'source' => resource_path('config/.zshrc'),
+                        'destination' => home_path('/.zshrc-tmp'),
+                    ],
+                    [
+                        'description' => 'Configuring shell aliases...',
+                        'command' => "echo 'alias python2=\"/usr/bin/python\"' >> ~/.zshrc && echo 'alias python=\"/usr/local/bin/python3\"' >> ~/.zshrc && source ~/.zshrc",
+                    ],
+                    [
+                        'description' => 'Installing Powerline...',
+                        'command' => 'pip3 install iterm2 && pip3 install --user powerline-status && cd ~ && git clone https://github.com/powerline/fonts && cd fonts && ./install.sh && cd ~',
+                    ],
+                    [
+                        'description' => 'Set iTerm2 default profile...',
+                        'source' => resource_path('scripts/default-profile.py'),
+                        'destination' => home_path('/Library/Application Support/iTerm2/Scripts/AutoLaunch/clair-profile.py'),
+                    ],
+                    [
+                        'description' => 'Enable iTerm2 Python API...',
+                        'command' => 'clair configure:iterm2',
+                    ],
+                ],
             ],
 
             'prezto' => [
                 'name' => 'Prezto',
-                'description' => 'Prezto is a configuration framework for zsh; it enriches the command line interface environment with sane defaults, aliases, functions, auto completion, and prompt themes.',
                 'url' => 'https://github.com/sorin-ionescu/prezto',
                 'check' => 'which prezto',
                 'command' => '
@@ -174,7 +198,6 @@ return [
             'options' => [
                 'dbngin' => [
                     'name' => 'DBngin',
-                    'description' => '',
                     'url' => 'https://dbngin.com/',
                     'licensed' => false,
                     'check' => 'dbngin',
@@ -182,7 +205,6 @@ return [
                 ],
                 'postgresapp' => [
                     'name' => 'Postgres.app',
-                    'description' => '',
                     'url' => 'https://postgresapp.com/',
                     'licensed' => true,
                     'check' => 'postgres',
@@ -198,7 +220,6 @@ return [
             'options' => [
                 'postico' => [
                     'name' => 'Postico',
-                    'description' => '',
                     'url' => 'https://eggerapps.at/postico/',
                     'licensed' => true,
                     'check' => 'postico',
@@ -206,7 +227,6 @@ return [
                 ],
                 'tableplus' => [
                     'name' => 'TablePlus',
-                    'description' => '',
                     'url' => 'https://tableplus.com/',
                     'licensed' => true,
                     'check' => 'tableplus',
@@ -221,7 +241,6 @@ return [
             'options' => [
                 'phpstorm' => [
                     'name' => 'PHPStorm',
-                    'description' => '',
                     'url' => 'https://www.jetbrains.com/phpstorm/',
                     'licensed' => true,
                     'check' => 'phpstorm',
@@ -229,7 +248,6 @@ return [
                 ],
                 'sublime' => [
                     'name' => 'Sublime Text',
-                    'description' => '',
                     'url' => 'https://www.sublimetext.com/',
                     'licensed' => true,
                     'check' => 'sublime',
@@ -237,7 +255,6 @@ return [
                 ],
                 'visual_studio' => [
                     'name' => 'Visual Studio Code',
-                    'description' => '',
                     'url' => 'https://code.visualstudio.com/',
                     'licensed' => true,
                     'check' => 'visual studio',
@@ -252,7 +269,6 @@ return [
             'options' => [
                 'paw' => [
                     'name' => 'Paw',
-                    'description' => '',
                     'url' => 'https://paw.cloud/',
                     'licensed' => true,
                     'check' => 'paw',
@@ -260,7 +276,6 @@ return [
                 ],
                 'postman' => [
                     'name' => 'Postman',
-                    'description' => '',
                     'url' => 'https://www.postman.com/',
                     'licensed' => true,
                     'check' => 'postman',
@@ -275,7 +290,6 @@ return [
             'options' => [
                 'iterm2' => [
                     'name' => 'iTerm2',
-                    'description' => '',
                     'url' => 'https://iterm2.com/',
                     'licensed' => false,
                     'check' => 'iterm',

@@ -39,7 +39,7 @@ class SetupReposCommand extends StepCommand
      */
     public function handle()
     {
-        $this->repoFolder = $this->ask('What is your repo folder?', $this->homeDirectory('Web'));
+        $this->repoFolder = $this->ask('What is your repo folder?', $this->homePath('Web'));
 
         File::ensureDirectoryExists($this->repoFolder);
 
@@ -112,7 +112,7 @@ class SetupReposCommand extends StepCommand
     {
         return $this->choice(
             'Select the repos you want to clone and set up (comma-separated)',
-            $this->buildOptions(),
+            $this->buildOptions(config('manifest.repos')),
             'none', null, true
         );
     }
@@ -120,13 +120,14 @@ class SetupReposCommand extends StepCommand
     /**
      * Return repo options.
      *
+     * @param  array  $options
      * @return array
      */
-    protected function buildOptions(): array
+    protected function buildOptions(array $options = []): array
     {
         return array_merge(
             ['none' => 'None'],
-            collect(config('manifest.repos'))->mapWithKeys(function ($item, $key) {
+            collect($options)->mapWithKeys(function ($item, $key) {
                 return [$key => $item['name']];
             })->toArray()
         );

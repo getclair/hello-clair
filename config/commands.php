@@ -69,7 +69,7 @@ return [
         LaravelZero\Framework\Commands\MakeCommand::class,
         LaravelZero\Framework\Commands\RenameCommand::class,
         LaravelZero\Framework\Commands\StubPublishCommand::class,
-
+        App\Commands\ConfigureiTerm2::class,
     ],
 
     /*

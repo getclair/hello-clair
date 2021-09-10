@@ -2,31 +2,52 @@
 
 namespace App\Commands;
 
-use Illuminate\Support\Str;
+use App\Concerns\HandlesChoices;
+use App\Concerns\HandlesInstallation;
 use LaravelZero\Framework\Commands\Command;
 use TitasGailius\Terminal\Terminal;
 
 abstract class StepCommand extends Command
 {
+    use HandlesChoices;
+    use HandlesInstallation;
+
     /**
      * @param  null  $context
      * @return mixed
      */
     protected function terminal($context = null)
     {
-        return Terminal::in($context ?? $this->homeDirectory());
+        return Terminal::in($context ?? $this->homePath());
     }
 
     /**
      * @param  null  $path
      * @return string
      */
-    protected function homeDirectory($path = null): string
+    protected function homePath($path = null): string
     {
-        if (Str::startsWith($path, '/')) {
-            $path = Str::replaceFirst('/', '', $path);
+        return home_path($path);
+    }
+
+    /**
+     * Checks if the option should be installed based on the "checks" value.
+     *
+     * @param $checks
+     * @return bool
+     */
+    protected function shouldInstall($checks): bool
+    {
+        if (! is_array($checks)) {
+            $checks = [$checks];
         }
 
-        return implode('/', [getenv('HOME'), $path]);
+        foreach ($checks as $check) {
+            if ($this->terminal()->run($check)->ok()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

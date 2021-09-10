@@ -46,16 +46,17 @@ class ConfigureSystemCommand extends StepCommand
         $this->terminal()->output($this)->run("git config --global user.email '$git_email'");
 
         if ($this->confirm('Do you want to set up Github authentication now?', true)) {
-            if ($token = $this->secret('Create a token on Github (https://github.com/settings/tokens/new) and enter it')) {
+            if ($this->shouldInstall('which git-credential-manager-core')) {
+                $this->task('Installing GCM...', function () {
+                    if ($this->shouldInstall('which git')) {
+                        $this->terminal()->output($this)->run('brew install git');
+                    }
 
-                // Set git to user the OSX keychain.
-                $this->terminal()->output($this)->run('git config --global credential.helper osxkeychain');
+                    $this->terminal()->output($this)->run('brew tap microsoft/git');
+                    $this->terminal()->output($this)->run('brew install --cask git-credential-manager-core');
 
-                // Store the credentials.
-                File::put(
-                    $this->homeDirectory('.git'),
-                    "https://{$git_username}:{$token}@github.com/{$git_username}"
-                );
+                    $this->comment('Git Credential Manager was successfully installed. You will be prompted to log in via the browser on your first connection to git.');
+                });
             }
         }
     }
