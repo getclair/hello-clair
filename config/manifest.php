@@ -69,6 +69,13 @@ return [
                 'command' => 'brew install php',
             ],
 
+            'python' => [
+                'name' => 'Python',
+                'description' => 'Installing Python...',
+                'check' => 'which python3',
+                'command' => 'brew install python3',
+            ],
+
             'composer' => [
                 'name' => 'Composer',
                 'description' => '',
@@ -81,6 +88,12 @@ return [
                 'description' => '',
                 'check' => 'which valet',
                 'command' => 'composer global require laravel/valet && valet domain test',
+            ],
+
+            'redis' => [
+                'name' => 'Redis',
+                'description' => '',
+                'command' => 'yes | pecl install -f redis',
             ],
 
         ],
@@ -120,13 +133,15 @@ return [
                 'name' => 'Oh My Zsh',
                 'description' => 'Oh My Zsh is an open source, community-driven framework for managing your zsh configuration. It comes with a bunch of features out of the box and improves your terminal experience.',
                 'url' => 'https://github.com/robbyrussell/oh-my-zsh',
-                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"',
+                'check' => 'which zsh',
+                'command' => 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && clair configure:oh-my-zsh',
             ],
 
             'prezto' => [
                 'name' => 'Prezto',
                 'description' => 'Prezto is a configuration framework for zsh; it enriches the command line interface environment with sane defaults, aliases, functions, auto completion, and prompt themes.',
                 'url' => 'https://github.com/sorin-ionescu/prezto',
+                'check' => 'which prezto',
                 'command' => '
                     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto" && \
                     setopt EXTENDED_GLOB \

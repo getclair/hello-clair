@@ -46,7 +46,7 @@ class InstallCliToolsCommand extends StepCommand
 
         foreach ($selections as $selection) {
             $this->task("Installing {$selection['name']}", function () use ($selection) {
-                if ($this->shouldInstallCliTool($selection['check'])) {
+                if ($this->shouldInstallCliTool($selection)) {
                     $this->terminal()->output($this)->run($selection['command']);
                 }
 
@@ -105,12 +105,16 @@ class InstallCliToolsCommand extends StepCommand
     /**
      * Check if a CLI tool should be installed, or if it exists already.
      *
-     * @param $check
+     * @param  array  $selection
      * @return bool
      */
-    protected function shouldInstallCliTool($check): bool
+    protected function shouldInstallCliTool(array $selection): bool
     {
-        $response = $this->terminal()->run($check);
+        if (! array_key_exists('check', $selection)) {
+            return true;
+        }
+
+        $response = $this->terminal()->run($selection['check']);
 
         return ! $response->ok()
             || $response->getExitCode() === 1

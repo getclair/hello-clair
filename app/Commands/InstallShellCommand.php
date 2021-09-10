@@ -34,7 +34,6 @@ class InstallShellCommand extends StepCommand
         if ($choice !== 'none') {
             $config = $options[$choice];
 
-            $this->installZsh();
             $this->installShell($config);
         }
     }
@@ -61,22 +60,14 @@ class InstallShellCommand extends StepCommand
     }
 
     /**
-     * Install zsh.
-     */
-    public function installZsh()
-    {
-        if (! $this->terminal()->run('which zsh')->ok()) {
-            $this->terminal()->output($this)->run('brew install zsh');
-        }
-    }
-
-    /**
      * Install the chosen shell.
      *
      * @param  array  $config
      */
     public function installShell(array $config)
     {
-        $this->terminal()->output($this)->run($config['command']);
+        if (! $this->terminal()->run($config['check'])->ok()) {
+            $this->terminal()->output($this)->run($config['command']);
+        }
     }
 }
