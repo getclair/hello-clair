@@ -50,4 +50,15 @@ abstract class StepCommand extends Command
 
         return true;
     }
+
+    /**
+     * Check if a piece of software is installed.
+     *
+     * @param  string  $app
+     * @return bool
+     */
+    protected function appCheck(string $app): bool
+    {
+        return $this->terminal()->run("mdfind \"kMDItemKind == 'Application'\" | grep -i $app")->ok();
+    }
 }

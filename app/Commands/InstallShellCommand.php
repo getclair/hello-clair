@@ -25,17 +25,21 @@ class InstallShellCommand extends StepCommand
      */
     public function handle()
     {
-        $this->line("Installing shell...\n");
+        if (! $this->appCheck('iterm2')) {
+            $this->error('You must have iTerm2 installed before adding a shell.');
+        } else {
+            $this->line("Installing shell...\n");
 
-        $options = config('manifest.shell.options');
+            $options = config('manifest.shell.options');
 
-        $choice = $this->buildQuestion('Select the Unix shell you want to install', $options);
+            $choice = $this->buildQuestion('Select the Unix shell you want to install', $options);
 
-        if ($choice !== 'none') {
-            $config = $options[$choice];
+            if ($choice !== 'none') {
+                $config = $options[$choice];
 
-            if ($this->shouldInstall($config['check'])) {
-                $this->install($config);
+                if ($this->shouldInstall($config['check'])) {
+                    $this->install($config);
+                }
             }
         }
     }

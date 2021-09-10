@@ -84,7 +84,7 @@ class SetupReposCommand extends StepCommand
      */
     protected function getSelections($config): array
     {
-        $choices = $this->buildQuestions($config);
+        $choices = $this->buildQuestions(config('manifest.repos'));
 
         if (! is_array($choices)) {
             $choices = [$choices];
@@ -108,11 +108,11 @@ class SetupReposCommand extends StepCommand
      *
      * @return array|string
      */
-    protected function buildQuestions()
+    protected function buildQuestions(array $choices)
     {
         return $this->choice(
             'Select the repos you want to clone and set up (comma-separated)',
-            $this->buildOptions(config('manifest.repos')),
+            $this->buildOptions($choices),
             'none', null, true
         );
     }

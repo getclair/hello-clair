@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class InstallAppsCommand extends StepCommand
 {
@@ -19,6 +20,8 @@ class InstallAppsCommand extends StepCommand
      * @var string
      */
     protected $description = 'Install selected apps.';
+
+    protected $macStoreSignedIn = false;
 
     /**
      * Execute the console command.
@@ -42,7 +45,13 @@ class InstallAppsCommand extends StepCommand
                 $checks = $config['type'] === 'anyOf' ? [$selection['check']] : Arr::pluck($selections, 'check');
 
                 if ($this->shouldInstall($checks)) {
-                    $this->install($selection);
+                    if (Str::startsWith($selection['command'], 'mas') && ! $this->macStoreSignedIn) {
+                        $this->signInToMacStore();
+                    }
+
+                    $this->task($selection['description'], function () use ($selection) {
+                        $this->install($selection);
+                    });
                 }
             }
         }
@@ -86,9 +95,25 @@ class InstallAppsCommand extends StepCommand
     protected function shouldInstall($checks): bool
     {
         $results = array_filter($checks, function ($check) {
-            return $this->terminal()->run("mdfind \"kMDItemKind == 'Application'\" | grep -i $check")->ok();
+            return $this->appCheck($check);
         });
 
         return count($results) === 0;
+    }
+
+    protected function signInToMacStore()
+    {
+        $command = '
+        if ! mas account >/dev/null; then
+            echo "Please open App Store and sign in using your Apple ID ...."
+            until mas account >/dev/null; do
+                sleep 5
+            done
+        fi
+        ';
+
+        $this->terminal()->output($this)->run($command);
+
+        $this->macStoreSignedIn = true;
     }
 }

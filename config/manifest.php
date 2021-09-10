@@ -35,12 +35,12 @@ return [
                 'command' => 'brew install npm',
             ],
 
-//            'cask' => [
-//                'name' => 'Cask',
-//                'description' => '',
-//                'check' => 'brew list cask',
-//                'command' => 'brew tap homebrew/cask && brew tap homebrew/cask-versions',
-//            ],
+            //            'cask' => [
+            //                'name' => 'Cask',
+            //                'description' => '',
+            //                'check' => 'brew list cask',
+            //                'command' => 'brew tap homebrew/cask && brew tap homebrew/cask-versions',
+            //            ],
 
             'docker' => [
                 'name' => 'Docker',
@@ -52,6 +52,12 @@ return [
                 'name' => 'AWS CLI',
                 'check' => 'which aws',
                 'command' => 'brew install awscli',
+            ],
+
+            'mas' => [
+                'name' => 'mas-cli',
+                'check' => 'which mas',
+                'command' => 'brew install mas',
             ],
 
         ],
@@ -245,6 +251,12 @@ return [
                     'licensed' => true,
                     'check' => 'phpstorm',
                     'command' => 'brew install phpstorm',
+                    'tasks' => [
+                        [
+                            'description' => 'Installing Jetbrains Toolbox...',
+                            'command' => 'brew install jetbrains-toolbox',
+                        ],
+                    ],
                 ],
                 'sublime' => [
                     'name' => 'Sublime Text',
@@ -294,6 +306,44 @@ return [
                     'licensed' => false,
                     'check' => 'iterm',
                     'command' => 'brew install iterm2',
+                ],
+            ],
+        ],
+
+        'development' => [
+            'group' => 'development tools',
+            'type' => 'anyOf',
+            'options' => [
+                'github_desktop' => [
+                    'name' => 'Github Desktop',
+                    'url' => 'https://desktop.github.com/',
+                    'licensed' => false,
+                    'check' => 'github',
+                    'command' => 'brew install github',
+                ],
+
+                'jira_desktop' => [
+                    'name' => 'Jira Cloud for Mac',
+                    'url' => 'https://www.atlassian.com/software/jira/mac',
+                    'licensed' => false,
+                    'check' => 'jira',
+                    'command' => 'mas purchase 1475897096',
+                ],
+
+                'stoplight' => [
+                    'name' => 'Stoplight Studio',
+                    'url' => 'https://stoplight.io/studio/',
+                    'licensed' => false,
+                    'check' => 'tuple',
+                    'command' => 'brew install stoplight-studio',
+                ],
+
+                'tuple' => [
+                    'name' => 'Tuple',
+                    'url' => 'https://tuple.app/',
+                    'licensed' => false,
+                    'check' => 'tuple',
+                    'command' => 'brew install tuple',
                 ],
             ],
         ],
